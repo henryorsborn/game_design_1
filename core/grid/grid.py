@@ -1,25 +1,31 @@
 from core.entities.player import Player
 from core.entities.chest import Chest
 from core.grid.blank_block import BlankBlock
+from core.constants.constants import SCALE, ENTITY_SCALE, BASE_ADJUST, ENTITY_ADJUST
+from core.util.util import range_scale
 from yaml import load
+import pygame
 
 
 class Grid(object):
     """The set of tiles of each 'Room' in the game. It will contain the player, chests, npcs, and all other entities"""
 
-    def __init__(self, width: int, height: int, blank_regions: list, entities: list, start_index: tuple):
+    def __init__(self, width: int, height: int, blank_regions: list, entities: list, start_index: tuple, player_position: list):
         """
         :type width: int
         :type height: int
         :type blank_regions: list
         :type entities: list
         :type start_index: tuple
+        :type player_position: list
         """
         self.width = width
         self.height = height
         self.blank_regions = blank_regions
         self.entities = entities
         self.start_index = start_index
+        self.player_position = player_position
+        #todo optimize other functions using player_position
 
 
     # intended for testing purposes
@@ -46,11 +52,46 @@ class Grid(object):
         blank_regions = [BlankBlock((bb["blank_region"]["top_left_index_x"],bb["blank_region"]["top_left_index_y"]),bb["blank_region"]["width"],bb["blank_region"]["height"]) for bb in content["blank_regions"]]
         entities_unadjusted = content["entities"]
         entities = []
+        player_position = [0,0]
         for entity in entities_unadjusted:
             if entity["entity"]["type"] == "Player":
-                entities.append(Player((entity["entity"]["start_index_x"],entity["entity"]["start_index_y"])))
+                player_position = [entity["entity"]["start_index_x"],entity["entity"]["start_index_y"]]
+                entities.append(Player(player_position))
             if entity["entity"]["type"] == "Chest":
                 entities.append(Chest((entity["entity"]["start_index_x"],entity["entity"]["start_index_y"]),entity["entity"]["is_opened"]))
             else:
                 pass
-        return Grid(content["width"],content["height"],blank_regions,entities,(content["start_index_x"],content["start_index_y"]))
+        return Grid(content["width"],content["height"],blank_regions,entities,(content["start_index_x"],content["start_index_y"]), player_position)
+
+    def repaint(self, screen: pygame.Surface):
+        for i in range_scale(self.height):
+            for j in range_scale(self.width):
+                pygame.draw.rect(screen, (100, 100, 255), (i + BASE_ADJUST, j + BASE_ADJUST, SCALE, SCALE))
+        for entity in self.entities:
+            if type(entity) == Chest:
+                pygame.draw.rect(screen, (0, 255, 100), ((entity.start_index[1] * SCALE) + ENTITY_ADJUST, (entity.start_index[0] * SCALE) + ENTITY_ADJUST, ENTITY_SCALE, ENTITY_SCALE))
+        for blank_region in self.blank_regions:
+            for i in range_scale(blank_region.height):
+                for j in range_scale(blank_region.width):
+                    delta_x = i + (blank_region.top_left_index[0] * SCALE) + BASE_ADJUST
+                    delta_y = j + (blank_region.top_left_index[1] * SCALE) + BASE_ADJUST
+                    pygame.draw.rect(screen, (0, 0, 0), (delta_x, delta_y, SCALE, SCALE))
+        pygame.draw.rect(screen, (200, 100, 0), (
+            (self.player_position[1] * SCALE) + ENTITY_ADJUST, (self.player_position[0] * SCALE) + ENTITY_ADJUST,
+            ENTITY_SCALE, ENTITY_SCALE))
+
+    def move_player(self, key_event: pygame.event, screen: pygame.Surface):
+        if key_event.key == pygame.K_w:
+            if self.player_position[0] != 0:
+                self.player_position[0] -= 1
+        elif key_event.key == pygame.K_a:
+            if self.player_position[1] != 0:
+                self.player_position[1] -= 1
+        elif key_event.key == pygame.K_s:
+            if self.player_position[0] != self.width-1:
+                self.player_position[0] += 1
+        elif key_event.key == pygame.K_d:
+            if self.player_position[1] != self.height-1:
+                self.player_position[1] += 1
+        self.repaint(screen)
+
