@@ -27,5 +27,5 @@ if __name__ == "__main__":
         if moving:
             pygame.display.update()
             grid.move_player(current_event, screen)
-            time.sleep(0.1)
+            time.sleep(0.15)
         pygame.display.update()
