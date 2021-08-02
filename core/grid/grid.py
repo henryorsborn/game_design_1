@@ -96,8 +96,8 @@ class Grid(object):
         for entity in self.entities:
             if type(entity) == Chest:
                 pygame.draw.rect(screen, (0, 255, 100), (
-                (entity.start_index[1] * SCALE) + ENTITY_ADJUST, (entity.start_index[0] * SCALE) + ENTITY_ADJUST,
-                ENTITY_SCALE, ENTITY_SCALE))
+                    (entity.start_index[1] * SCALE) + ENTITY_ADJUST, (entity.start_index[0] * SCALE) + ENTITY_ADJUST,
+                    ENTITY_SCALE, ENTITY_SCALE))
         for blank_region in self.blank_regions:
             for i in range_scale(blank_region.height):
                 for j in range_scale(blank_region.width):
@@ -108,7 +108,8 @@ class Grid(object):
             (self.player_position[1] * SCALE) + ENTITY_ADJUST, (self.player_position[0] * SCALE) + ENTITY_ADJUST,
             ENTITY_SCALE, ENTITY_SCALE))
 
-    def paint_battle_start_animation(self, screen: pygame.Surface):
+    @staticmethod
+    def paint_battle_start_animation(screen: pygame.Surface):
         for i in range(0, 500, 10):
             for j in range(10, 500, 30):
                 if j % 20 == 0:
@@ -157,6 +158,6 @@ class Grid(object):
             self.initiate__battle(screen)
 
     def initiate__battle(self, screen: pygame.Surface):
-        self.paint_battle_start_animation(screen)
+        Grid.paint_battle_start_animation(screen)
         self.paint_battle_menu(screen)
         self.in_battle = True
