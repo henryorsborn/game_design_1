@@ -11,7 +11,8 @@ if __name__ == "__main__":
     # grid should have player and chest on bottom row and the grid should have a missing 3x4 chunk missing from top left
     screen = pygame.display.set_mode((500, 400))
     grid.repaint(screen)
-    moving = False
+    moving_x = False
+    moving_y = False
     pygame.font.init()
     font = pygame.font.SysFont('Courier New', 13)
     grid.set_font(font)
@@ -22,13 +23,19 @@ if __name__ == "__main__":
                 exit(0)
             if not grid.in_battle:
                 if event.type == KEYDOWN:
-                    if event.key in [pygame.K_w,pygame.K_a,pygame.K_s,pygame.K_d]:
+                    if event.key in [pygame.K_a, pygame.K_d]:
                         current_event = event
-                        moving = True
+                        moving_x = True
+                    if event.key in [pygame.K_w, pygame.K_s]:
+                        current_event = event
+                        moving_y = True
                 if event.type == KEYUP:
-                    moving = False
-                if moving:
-                    pygame.display.update()
-                    grid.move_player(current_event, screen)
-                    time.sleep(0.15)
-                pygame.display.update()
+                    if event.key in [pygame.K_a, pygame.K_d]:
+                        moving_x = False
+                    if event.key in [pygame.K_w, pygame.K_s]:
+                        moving_y = False
+        if moving_x or moving_y:
+            grid.move_player(current_event, screen)
+            pygame.display.flip()
+            time.sleep(0.15)
+        pygame.display.flip()
