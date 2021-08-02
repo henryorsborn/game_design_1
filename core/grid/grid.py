@@ -29,7 +29,7 @@ class Grid(object):
         self.entities = entities
         self.start_index = start_index
         self.player_position = player_position
-        self.danger = 89
+        self.danger = 0
         self.in_battle = False
         self.tiles = [[None for _ in range(self.width)] for _ in range(self.height)]
         self.font = None
@@ -154,7 +154,7 @@ class Grid(object):
                     self.tiles[self.player_position[1]][self.player_position[0]].type_ = EMPTY
                     self.player_position[1] += 1
         self.repaint(screen)
-        if random.randint(0, 100 - self.danger) % (100 - self.danger) == 0:
+        if random.randint(0, 100 - self.danger) % (100 - self.danger) == 0 and self.danger != 0:
             self.initiate__battle(screen)
 
     def initiate__battle(self, screen: pygame.Surface):
