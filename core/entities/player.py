@@ -9,4 +9,4 @@ class Player(Entity):
         :param start_index: list[int, int]
         """
         super().__init__(start_index)
-        self.health = None #todo
+        self.health = None  # todo

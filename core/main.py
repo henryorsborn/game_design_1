@@ -22,7 +22,7 @@ if __name__ == "__main__":
                 exit(0)
             if not grid.in_battle:
                 if event.type == KEYDOWN:
-                    if event.key in [pygame.K_w,pygame.K_a,pygame.K_s,pygame.K_d]:
+                    if event.key in [pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                         current_event = event
                         moving = True
                 if event.type == KEYUP:
