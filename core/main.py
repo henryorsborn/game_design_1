@@ -34,8 +34,19 @@ if __name__ == "__main__":
                         moving_x = False
                     if event.key in [pygame.K_w, pygame.K_s]:
                         moving_y = False
-        if moving_x or moving_y:
-            grid.move_player(current_event, screen)
-            pygame.display.flip()
-            time.sleep(0.15)
+                if moving_x or moving_y:
+                    grid.move_player(current_event, screen)
+                    pygame.display.flip()
+                    time.sleep(0.15)
+            else:
+                if event.type == KEYDOWN:
+                    if event.key == pygame.K_s:
+                        grid.battle_selection += 1
+                        if grid.battle_selection == 4:
+                            grid.battle_selection = 0
+                    if event.key == pygame.K_w:
+                        grid.battle_selection -= 1
+                        if grid.battle_selection == -1:
+                            grid.battle_selection = 3
+                    grid.paint_battle_menu(screen)
         pygame.display.flip()
