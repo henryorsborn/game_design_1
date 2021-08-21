@@ -17,6 +17,7 @@ monster:
         key: 'howl'
         dmg: 0
         acc: 4
+        cost: 20
         eff:
           - effect:
               type: df
@@ -26,6 +27,7 @@ monster:
         key: 'rabid_fang'
         dmg: 4
         acc: 2
+        cost: 0
         eff:
           - effect:
               type: stat
