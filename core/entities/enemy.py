@@ -1,3 +1,5 @@
+from core import *
+from core.battle import *
 from yaml import load
 
 
@@ -30,7 +32,21 @@ class Enemy(object):
     def read_and_deserialize_yml(path: str = ""):
         with open(path) as file:
             content = load(file.read())["monster"]
-            
+
+        attacks = []
+        for attack in content["attacks"]:
+            attack = attack["attack"]
+            effects = []
+            for effect in attack["eff"]:
+                effect = effect["effect"]
+                effects.append(AttackEffect(effect["type"], effect["args"]))
+            attacks.append(Attack(attack["name"],
+                                  attack["key"],
+                                  attack["dmg"],
+                                  attack["acc"],
+                                  attack["cost"],
+                                  effects))
+
         return Enemy(content["type"],
                      content["class"],
                      content["name"],
