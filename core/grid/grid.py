@@ -4,9 +4,7 @@ from core.grid.blank_block import BlankBlock
 from core.constants.constants import SCALE, ENTITY_SCALE, BASE_ADJUST, ENTITY_ADJUST, PLAYER, EMPTY, CHEST, BLANK
 from core.util.util import range_scale
 from core.grid.tile import Tile
-import time
 from yaml import load
-import random
 import pygame
 
 
@@ -30,10 +28,7 @@ class Grid(object):
         self.start_index = start_index
         self.player_position = player_position
         self.danger = 50
-        self.in_battle = False
-        self.battle_selection = 0
         self.tiles = [[None for _ in range(self.width)] for _ in range(self.height)]
-        self.font = None
         for i in range(self.height):
             for j in range(self.width):
                 self.tiles[i][j] = Tile(EMPTY)
@@ -47,9 +42,6 @@ class Grid(object):
                 for j in range(blank_region.width):
                     self.tiles[i + blank_region.top_left_index[0]][j + blank_region.top_left_index[1]] = Tile(BLANK)
         # todo optimize other functions using player_position
-
-    def set_font(self, font: pygame.font):
-        self.font = font
 
     # intended for testing purposes
     def __repr__(self):
@@ -109,59 +101,3 @@ class Grid(object):
             (self.player_position[1] * SCALE) + ENTITY_ADJUST, (self.player_position[0] * SCALE) + ENTITY_ADJUST,
             ENTITY_SCALE, ENTITY_SCALE))
 
-    @staticmethod
-    def paint_battle_start_animation(screen: pygame.Surface):
-        for i in range(0, 500, 10):
-            for j in range(10, 500, 30):
-                if j % 20 == 0:
-                    pygame.draw.rect(screen, (255, 100, 100), (j, 470 - i, 10, 10))
-                    pygame.draw.rect(screen, (255, 100, 100), (500 - i, j, 10, 10))
-                else:
-                    pygame.draw.rect(screen, (255, 100, 100), (j, i, 10, 10))
-                    pygame.draw.rect(screen, (255, 100, 100), (i, j, 10, 10))
-            time.sleep(0.03)
-            pygame.display.update()
-        pygame.draw.rect(screen, (0, 0, 0), (0, 0, 500, 500))
-
-    def paint_battle_menu(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, (255, 255, 255), (60, 225, 240, 100))
-        pygame.draw.rect(screen, (0, 0, 0), (65, 230, 230, 90))
-        commands = ['Attack', 'Skill', 'Magic', 'Item']
-        indexes = [(90, 235), (90, 257), (90, 278), (90, 300)]
-        for i in range(len(commands)):
-            if i == self.battle_selection:
-                adjusted_index = (indexes[i][0]-20, indexes[i][1])
-                screen.blit(self.font.render(f"* {commands[i]}", False, (255, 128, 128)), adjusted_index)
-            else:
-                screen.blit(self.font.render(commands[i], False, (255, 255, 255)), indexes[i])
-
-    # fixme work on indexes
-    def move_player(self, key_event: pygame.event, screen: pygame.Surface):
-        if key_event.key == pygame.K_w:
-            if self.player_position[0] != 0:
-                if self.tiles[self.player_position[1]][self.player_position[0] - 1].type_ == EMPTY:
-                    self.tiles[self.player_position[1]][self.player_position[0]].type_ = EMPTY
-                    self.player_position[0] -= 1
-        elif key_event.key == pygame.K_a:
-            if self.player_position[1] != 0:
-                if self.tiles[self.player_position[1] - 1][self.player_position[0]].type_ == EMPTY:
-                    self.tiles[self.player_position[1]][self.player_position[0]].type_ = EMPTY
-                    self.player_position[1] -= 1
-        elif key_event.key == pygame.K_s:
-            if self.player_position[0] != self.width - 1:
-                if self.tiles[self.player_position[1]][self.player_position[0] + 1].type_ == EMPTY:
-                    self.tiles[self.player_position[1]][self.player_position[0]].type_ = EMPTY
-                    self.player_position[0] += 1
-        elif key_event.key == pygame.K_d:
-            if self.player_position[1] != self.height - 1:
-                if self.tiles[self.player_position[1] + 1][self.player_position[0]].type_ == EMPTY:
-                    self.tiles[self.player_position[1]][self.player_position[0]].type_ = EMPTY
-                    self.player_position[1] += 1
-        self.repaint(screen)
-        if random.randint(0, 100 - self.danger) % (100 - self.danger) == 0 and self.danger != 0:
-            self.initiate__battle(screen)
-
-    def initiate__battle(self, screen: pygame.Surface):
-        Grid.paint_battle_start_animation(screen)
-        self.paint_battle_menu(screen)
-        self.in_battle = True
