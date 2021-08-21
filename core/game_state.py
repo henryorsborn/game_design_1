@@ -71,4 +71,5 @@ class GameState(object):
     def initiate__battle(self, screen: pygame.Surface):
         GameState.paint_battle_start_animation(screen)
         self.paint_battle_menu(screen)
+        self.battle_stats.enemy_path = random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0]
         self.battle_stats.in_battle = True

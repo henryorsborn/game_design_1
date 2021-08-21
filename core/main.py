@@ -1,9 +1,4 @@
-from core.grid.grid import Grid
-from core.entities.player import Player
-from core.entities.chest import Chest
-from core.grid.blank_block import BlankBlock
-from core.game import Game
-from core.game import GameState
+from core import *
 from pygame.locals import *
 import pygame
 import time

@@ -12,7 +12,7 @@ class Grid(object):
     """The set of tiles of each 'Room' in the game. It will contain the player, chests, npcs, and all other entities"""
 
     def __init__(self, width: int, height: int, blank_regions: list, entities: list, start_index: tuple,
-                 player_position: list):
+                 player_position: list, enemy_paths: list, enemy_encounter_rates: list):
         """
         :type width: int
         :type height: int
@@ -27,8 +27,10 @@ class Grid(object):
         self.entities = entities
         self.start_index = start_index
         self.player_position = player_position
-        self.danger = 50
+        self.danger = 90
         self.tiles = [[None for _ in range(self.width)] for _ in range(self.height)]
+        self.enemy_paths = enemy_paths
+        self.enemy_encounter_rates = enemy_encounter_rates
         for i in range(self.height):
             for j in range(self.width):
                 self.tiles[i][j] = Tile(EMPTY)
@@ -80,7 +82,9 @@ class Grid(object):
             else:
                 pass
         return Grid(content["width"], content["height"], blank_regions, entities,
-                    (content["start_index_x"], content["start_index_y"]), player_position)
+                    (content["start_index_x"], content["start_index_y"]), player_position,
+                    list(map(lambda x: f"../resources/beastiary/{x['enemy']['path']}.yml", content["enemies"])),
+                    list(map(lambda x: x['enemy']["encounter_rate"], content["enemies"])))
 
     def repaint(self, screen: pygame.Surface):
         for i in range_scale(self.height):

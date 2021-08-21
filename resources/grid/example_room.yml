@@ -20,3 +20,10 @@ grid:
         start_index_y: 2
   start_index_x: 6
   start_index_y: 3
+  enemies:
+    - enemy:
+        path: "1_wolf"
+        encounter_rate: 3
+    - enemy:
+        path: "2_sentry_bot"
+        encounter_rate: 1

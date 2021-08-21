@@ -1,0 +1,65 @@
+monster:
+  type: mechanical
+  class: common_enemy
+  name: Sentry Bot
+  stats:
+    hp: 200
+    mp: 60
+    str: 2
+    def: 2
+    mag: 4
+    mgdf: 3
+    spd: 5
+    resist: poison|freenzy
+    elem_resist: dark
+    elem_absorb: None
+    elem_weak: lightning
+  attacks:
+    - attack:
+        name: Sonic Wave
+        key: 'sonic_wave'
+        dmg: 0
+        acc: 6
+        eff:
+          - effect:
+              type: str
+              args: -3
+    - attack:
+        name: Laser
+        key: 'laser'
+        dmg: 5
+        acc: 1
+        eff: None
+    - attack:
+        name: Self Destruct
+        key: 'self_destruct'
+        dmg: 10
+        acc: 10
+        eff:
+          - effect:
+              type: death
+    - attack:
+        name: Missile
+        key: 'missile'
+        dmg: 10
+        acc: 10
+        eff: None
+  script:
+    - step:
+      type: attack
+      key: 'attack'
+      args: 'missile'
+    - step:
+        type: while
+        key: 'while'
+        children:
+          - step:
+              type: func
+              key: 'rand_pick'
+              args:
+                - ['sonic_wave', 7]
+                - ['laser', 6]
+                - ['self_destruct', 1]
+        term:
+          - key: 'self_destruct'
+
