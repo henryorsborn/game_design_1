@@ -2,7 +2,6 @@ monster:
   type: animal
   class: common_enemy
   name: Wolf
-  seen: false
   stats:
     hp: 130
     mp: 160

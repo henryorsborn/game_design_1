@@ -2,7 +2,6 @@ monster:
   type: mechanical
   class: common_enemy
   name: Sentry Bot
-  seen: false
   stats:
     hp: 200
     mp: 60
