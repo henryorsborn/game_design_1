@@ -1,0 +1,44 @@
+monster:
+  type: animal
+  class: common_enemy
+  name: Wolf
+  seen: false
+  stats:
+    hp: 130
+    mp: 160
+    str: 3
+    def: 3
+    mag: 1
+    mgdf: 1
+    spd: 4
+  attacks:
+    - attack:
+        name: Howl
+        key: 'howl'
+        dmg: 0
+        acc: 4
+        eff:
+          - effect:
+              type: df
+              args: -2
+    - attack:
+        name: Rabid Fang
+        key: 'rabid_fang'
+        dmg: 4
+        acc: 2
+        eff:
+          - effect:
+              type: stat
+              args: freenzy|poison # the status affects attributed
+  script: # this is the first draft of a representation of an AI script throw YML that I may throw away later
+    - step:
+        type: while # going straight into the while loop of the script and not having any proceeding steps, such as an opening attack
+        children:
+          - step: # child steps
+              type: func
+              key: 'rand_pick'
+              args: # args: key, probability
+                - ['howl', 2]
+                - ['rabid_fang', 3]
+        term: None # This loop will continue for the rest of the battle so no termination needs to be added
+
