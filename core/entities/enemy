@@ -30,7 +30,7 @@ class Enemy(object):
     def read_and_deserialize_yml(path: str = ""):
         with open(path) as file:
             content = load(file.read())["monster"]
-
+            
         return Enemy(content["type"],
                      content["class"],
                      content["name"],
@@ -47,3 +47,4 @@ class Enemy(object):
                      content["stats"]["elem_resist"].split(),
                      content["stats"]["elem_absorb"].split(),
                      content["stats"]["elem_weak"].split())
+
