@@ -81,7 +81,8 @@ class Grid(object):
             else:
                 pass
         return Grid(content["width"], content["height"], blank_regions, entities,
-                    (content["start_index_x"], content["start_index_y"]), player_position, list(map(lambda x: f"../resources/beastiary/{x}.yml", content["enemies"])))
+                    (content["start_index_x"], content["start_index_y"]), player_position,
+                    list(map(lambda x: (f"../resources/beastiary/{x['path']}.yml", x["encounter_rate"]), content["enemies"].values())))
 
     def repaint(self, screen: pygame.Surface):
         for i in range_scale(self.height):
