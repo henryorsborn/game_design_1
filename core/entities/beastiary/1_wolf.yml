@@ -11,6 +11,10 @@ monster:
     mag: 1
     mgdf: 1
     spd: 4
+    resist: blindness
+    elem_resist: None
+    elem_absorb: dark
+    elem_weak: fire
   attacks:
     - attack:
         name: Howl

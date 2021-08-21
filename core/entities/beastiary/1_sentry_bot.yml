@@ -11,6 +11,10 @@ monster:
     mag: 4
     mgdf: 3
     spd: 5
+    resist: poison|freenzy
+    elem_resist: dark
+    elem_absorb: None
+    elem_weak: lightning
   attacks:
     - attack:
         name: Sonic Wave
