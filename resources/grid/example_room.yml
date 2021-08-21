@@ -20,3 +20,6 @@ grid:
         start_index_y: 2
   start_index_x: 6
   start_index_y: 3
+  enemies:
+    - "1_wolf"
+    - "2_sentry_bot"
