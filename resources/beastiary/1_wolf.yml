@@ -38,6 +38,7 @@ monster:
   script: # this is the first draft of a representation of an AI script throw YML that I may throw away later
     - step:
         type: while # going straight into the while loop of the script and not having any proceeding steps, such as an opening attack
+        key: 'while'
         children:
           - step: # child steps
               type: func

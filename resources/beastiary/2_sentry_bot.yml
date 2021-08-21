@@ -51,6 +51,7 @@ monster:
       args: 'missile'
     - step:
         type: while
+        key: 'while'
         children:
           - step:
               type: func

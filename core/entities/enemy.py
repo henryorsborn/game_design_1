@@ -8,7 +8,7 @@ class Enemy(object):
     def __init__(self, type_: str, class_: str, name: str, max_hp: int, hp: int,
                  max_mp: int, mp: int, strength: int, defense: int, magic: int,
                  magic_defense: int, speed: int, resistance: list, elem_resistance: list,
-                 elem_absorb: list, elem_weak: list):
+                 elem_absorb: list, elem_weak: list, attacks: list, script: dict):
         self.type_ = type_
         self.class_ = class_
         self.name = name
@@ -25,8 +25,8 @@ class Enemy(object):
         self.elem_resistance = elem_resistance if elem_resistance is not [] else None
         self.elem_absorb = elem_absorb if elem_absorb is not [] else None
         self.elem_weak = elem_weak if elem_weak is not [] else None
-        self.attacks = []
-        self.script = ""
+        self.attacks = attacks
+        self.script = script
 
     @staticmethod
     def read_and_deserialize_yml(path: str = ""):
@@ -62,5 +62,7 @@ class Enemy(object):
                      content["stats"]["resist"].split(),
                      content["stats"]["elem_resist"].split(),
                      content["stats"]["elem_absorb"].split(),
-                     content["stats"]["elem_weak"].split())
+                     content["stats"]["elem_weak"].split(),
+                     attacks,
+                     content["script"])
 
