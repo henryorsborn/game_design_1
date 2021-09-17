@@ -3,6 +3,7 @@ from core.battle.battle_stats import BattleStats
 import pygame
 import time
 import random
+import os
 from core.constants.constants import EMPTY
 
 
@@ -41,8 +42,12 @@ class GameState(object):
                 screen.blit(self.font.render(f"* {commands[i]}", False, (255, 128, 128)), adjusted_index)
             else:
                 screen.blit(self.font.render(commands[i], False, (255, 255, 255)), indexes[i])
+        if self.battle_stats.enemy:
+            print(os.getcwd())
+            enemy_image = pygame.image.load(self.battle_stats.enemy.path_to_sprite)
+            screen.blit(enemy_image, (300, 50))
 
-    # fixme work on indexes
+   # fixme work on indexes
     def move_player(self, key_event: pygame.event, screen: pygame.Surface):
         if key_event.key == pygame.K_w:
             if self.grid.player_position[0] != 0:
@@ -70,6 +75,6 @@ class GameState(object):
 
     def initiate__battle(self, screen: pygame.Surface):
         GameState.paint_battle_start_animation(screen)
+        self.battle_stats.set_enemy_path(random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0])
         self.paint_battle_menu(screen)
-        self.battle_stats.enemy_path = random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0]
         self.battle_stats.in_battle = True

@@ -2,6 +2,7 @@ monster:
   type: animal
   class: common_enemy
   name: Wolf
+  path_to_sprite: "../resources/sprites/wolf.png"
   stats:
     hp: 130
     mp: 160
