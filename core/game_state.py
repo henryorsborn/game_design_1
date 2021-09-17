@@ -47,7 +47,7 @@ class GameState(object):
             enemy_image = pygame.image.load(self.battle_stats.enemy.path_to_sprite)
             screen.blit(enemy_image, (300, 50))
 
-   # fixme work on indexes
+   # fixme work on indexes  
     def move_player(self, key_event: pygame.event, screen: pygame.Surface):
         if key_event.key == pygame.K_w:
             if self.grid.player_position[0] != 0:
