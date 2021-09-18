@@ -12,10 +12,10 @@ class Player(Entity):
         self.level = 1
         self.hp = 300
         self.mp = 100
-        self.str = 5
-        self.def_ = 5
-        self.mag = 5
-        self.mgdf = 5
-        self.spd = 5
+        self.strength = 5
+        self.defense = 5
+        self.magic = 5
+        self.magic_defense = 5
+        self.speed = 5
         self.luck = 5
         self.spl = []

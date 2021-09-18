@@ -11,14 +11,14 @@ import pygame
 class Grid(object):
     """The set of tiles of each 'Room' in the game. It will contain the player, chests, npcs, and all other entities"""
 
-    def __init__(self, width: int, height: int, blank_regions: list, entities: list, start_index: tuple,
+    def __init__(self, width: int, height: int, blank_regions: list, entities: list, start_index: list,
                  player_position: list, enemy_paths: list, enemy_encounter_rates: list):
         """
         :type width: int
         :type height: int
         :type blank_regions: list
         :type entities: list
-        :type start_index: tuple
+        :type start_index: list
         :type player_position: list
         """
         self.width = width
@@ -47,7 +47,7 @@ class Grid(object):
 
     # intended for testing purposes
     def __repr__(self):
-        base_grid = [["_" for i in range(self.height)] for j in range(self.width)]
+        base_grid = [["_" for _ in range(self.height)] for _ in range(self.width)]
         for entity in self.entities:
             if type(entity) == Player:
                 base_grid[entity.start_index[0]][entity.start_index[1]] = "P"
@@ -82,7 +82,7 @@ class Grid(object):
             else:
                 pass
         return Grid(content["width"], content["height"], blank_regions, entities,
-                    (content["start_index_x"], content["start_index_y"]), player_position,
+                    [content["start_index_x"], content["start_index_y"]], player_position,
                     list(map(lambda x: f"../resources/beastiary/{x['enemy']['path']}.yml", content["enemies"])),
                     list(map(lambda x: x['enemy']["encounter_rate"], content["enemies"])))
 
