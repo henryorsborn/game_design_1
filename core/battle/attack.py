@@ -1,11 +1,11 @@
 class Attack(object):
 
-    def __init__(self, name: str, key: str, damage: int, accuracy: int, cost: int = 0, effect: list = None):
+    def __init__(self, name: str, key: str, dmg: int, acc: int, cost: int, eff: list = None):
         self.name = name
         self.key = key
-        self.damage = damage
-        self.accuracy = accuracy
+        self.damage = dmg
+        self.accuracy = acc
         self.cost = cost
-        if not effect:
-            effect = []
-        self.effect = effect
+        if not eff:
+            eff = []
+        self.effect = eff

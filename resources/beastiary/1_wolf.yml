@@ -24,8 +24,8 @@ monster:
         cost: 20
         eff:
           - effect:
-              type: df
-              args: -2
+              type_: df
+              args_: -2
     - attack:
         name: Rabid Fang
         key: 'rabid_fang'
@@ -34,17 +34,17 @@ monster:
         cost: 0
         eff:
           - effect:
-              type: stat
-              args: freenzy|poison # the status affects attributed
+              type_: stat
+              args_: freenzy|poison # the status affects attributed
   script: # this is the first draft of a representation of an AI script throw YML that I may throw away later
     - step:
         type: while # going straight into the while loop of the script and not having any proceeding steps, such as an opening attack
         key: 'while'
         children:
           - step: # child steps
-              type: func
+              type_: func
               key: 'rand_pick'
-              args: # args: key, probability
+              args_: # args: key, probability
                 - ['howl', 2]
                 - ['rabid_fang', 3]
         term: None # This loop will continue for the rest of the battle so no termination needs to be added

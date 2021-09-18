@@ -21,29 +21,33 @@ monster:
         key: 'sonic_wave'
         dmg: 0
         acc: 6
+        cost: 3
         eff:
           - effect:
-              type: str
-              args: -3
+              type_: str
+              args_: -3
     - attack:
         name: Laser
         key: 'laser'
         dmg: 5
         acc: 1
+        cost: 0
         eff: None
     - attack:
         name: Self Destruct
         key: 'self_destruct'
         dmg: 10
         acc: 10
+        cost: 0
         eff:
           - effect:
-              type: death
+              type_: death
     - attack:
         name: Missile
         key: 'missile'
         dmg: 10
         acc: 10
+        cost: 6
         eff: None
   script:
     - step:
@@ -55,9 +59,9 @@ monster:
         key: 'while'
         children:
           - step:
-              type: func
+              type_: func
               key: 'rand_pick'
-              args:
+              args_:
                 - ['sonic_wave', 7]
                 - ['laser', 6]
                 - ['self_destruct', 1]

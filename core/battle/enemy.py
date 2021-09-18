@@ -37,15 +37,12 @@ class Enemy(object):
         for attack in content["attacks"]:
             attack = attack["attack"]
             effects = []
-            for effect in attack["eff"]:
-                effect = effect["effect"]
-                effects.append(AttackEffect(effect["type"], effect["args"]))
-            attacks.append(Attack(attack["name"],
-                                  attack["key"],
-                                  attack["dmg"],
-                                  attack["acc"],
-                                  cost=attack["cost"],
-                                  effect=effects))
+            if attack["eff"] != "None":
+                for effect in attack["eff"]:
+                    effect = effect["effect"]
+                    effects.append(AttackEffect(**effect))
+                attack["eff"] = effects
+            attacks.append(Attack(**attack))
 
         return Enemy(content["type"],
                      content["class"],
