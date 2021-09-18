@@ -2,6 +2,7 @@ monster:
   type: mechanical
   class: common_enemy
   name: Sentry Bot
+  path_to_sprite: "../resources/sprites/sentry_bot.png"
   stats:
     hp: 200
     mp: 60

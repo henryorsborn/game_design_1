@@ -1,17 +1,17 @@
-from core import *
-from core.battle import *
+from core.battle.attack import Attack
+from core.battle.attack_effect import AttackEffect
 from yaml import load
-
 
 class Enemy(object):
 
-    def __init__(self, type_: str, class_: str, name: str, max_hp: int, hp: int,
+    def __init__(self, type_: str, class_: str, name: str, path_to_sprite: str, max_hp: int, hp: int,
                  max_mp: int, mp: int, strength: int, defense: int, magic: int,
                  magic_defense: int, speed: int, resistance: list, elem_resistance: list,
                  elem_absorb: list, elem_weak: list, attacks: list, script: dict):
         self.type_ = type_
         self.class_ = class_
         self.name = name
+        self.path_to_sprite = path_to_sprite
         self.max_hp = max_hp
         self.hp = hp
         self.max_mp = max_mp
@@ -44,12 +44,13 @@ class Enemy(object):
                                   attack["key"],
                                   attack["dmg"],
                                   attack["acc"],
-                                  attack["cost"],
-                                  effects))
+                                  cost=attack["cost"],
+                                  effect=effects))
 
         return Enemy(content["type"],
                      content["class"],
                      content["name"],
+                     content["path_to_sprite"],
                      content["stats"]["hp"],
                      content["stats"]["hp"],
                      content["stats"]["mp"],
