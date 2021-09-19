@@ -31,4 +31,4 @@ class BattleStats(object):
                 if turns[i]["cool_down"] == turns[i]["wait_time"]:
                     turns[i]["cool_down"] = 0
                     queue.append(turns[i]["name"])
-        print(queue)
+        self.battle_queue = queue
