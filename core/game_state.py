@@ -39,7 +39,7 @@ class GameState(object):
         command_indices = [235, 257, 278, 300]
         queue_indices = [302, 290, 278, 266, 254, 242, 230]
         for i in range(len(commands)):
-            if i == self.battle_stats.battle_selection:
+            if i == self.battle_stats.battle_selection and self.battle_stats.current_turn == "Player":
                 adjusted_index = (70, command_indices[i])
                 screen.blit(self.font.render(f"* {commands[i]}", False, PINK2), adjusted_index)
             else:
@@ -78,8 +78,9 @@ class GameState(object):
             self.initiate__battle(screen)
 
     def initiate__battle(self, screen: pygame.Surface):
+        self.battle_stats.in_battle = True
         GameState.paint_battle_start_animation(screen)
         self.battle_stats.set_enemy_path(random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0])
         self.battle_stats.set_battle_queue()
         self.paint_battle_menu(screen)
-        self.battle_stats.in_battle = True
+

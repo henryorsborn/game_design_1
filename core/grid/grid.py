@@ -4,7 +4,7 @@ from core.grid.blank_block import BlankBlock
 from core.constants.constants import SCALE, ENTITY_SCALE, BASE_ADJUST, ENTITY_ADJUST, PLAYER, EMPTY, CHEST, BLANK
 from core.util.util import range_scale
 from core.grid.tile import Tile
-from yaml import load
+from yaml import safe_load
 import pygame
 
 
@@ -65,7 +65,7 @@ class Grid(object):
         :param path: str
         """
         with open(path) as file:
-            content = load(file.read())["grid"]
+            content = safe_load(file.read())["grid"]
         blank_regions = [BlankBlock((bb["blank_region"]["top_left_index_x"], bb["blank_region"]["top_left_index_y"]),
                                     bb["blank_region"]["width"], bb["blank_region"]["height"]) for bb in
                          content["blank_regions"]]

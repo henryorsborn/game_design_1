@@ -10,6 +10,7 @@ class BattleStats(object):
         self.enemy_path = enemy_path
         self.enemy = None
         self.battle_queue = []
+        self.current_turn = None
 
     def set_enemy_path(self, enemy_path):
         self.enemy_path = enemy_path
@@ -32,3 +33,4 @@ class BattleStats(object):
                     turns[i]["cool_down"] = 0
                     queue.append(turns[i]["name"])
         self.battle_queue = queue
+        self.current_turn = self.battle_queue[0]
