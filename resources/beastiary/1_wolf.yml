@@ -1,20 +1,19 @@
 monster:
-  type: animal
-  class: common_enemy
+  type_: animal
+  class_: common_enemy
   name: Wolf
   path_to_sprite: "../resources/sprites/wolf.png"
-  stats:
-    hp: 130
-    mp: 160
-    str: 3
-    def: 3
-    mag: 1
-    mgdf: 1
-    spd: 4
-    resist: blindness
-    elem_resist: None
-    elem_absorb: dark
-    elem_weak: fire
+  hp: 130
+  mp: 160
+  str_: 3
+  def_: 3
+  mag: 1
+  mgdf: 1
+  spd: 4
+  resist: blindness
+  elem_resist: None
+  elem_absorb: dark
+  elem_weak: fire
   attacks:
     - attack:
         name: Howl
