@@ -2,6 +2,7 @@ from core.battle.attack import Attack
 from core.battle.attack_effect import AttackEffect
 from yaml import safe_load
 
+
 class Enemy(object):
 
     def __init__(self, type_: str, class_: str, name: str, path_to_sprite: str, hp: int,
@@ -50,4 +51,3 @@ class Enemy(object):
         content["elem_weak"] = content["elem_weak"].split()
 
         return Enemy(**content)
-

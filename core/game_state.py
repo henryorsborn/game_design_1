@@ -47,9 +47,9 @@ class GameState(object):
         if self.battle_stats.enemy:
             enemy_image = pygame.image.load(self.battle_stats.enemy.path_to_sprite)
             screen.blit(enemy_image, (300, 50))
-        screen.blit(self.font.render(">>", False, RED), (360,302))
+        screen.blit(self.font.render(">>", False, RED), (360, 302))
         for i in range(6, -1, -1):
-            screen.blit(self.font.render(self.battle_stats.battle_queue[i], False, WHITE), (380,queue_indices[i]))
+            screen.blit(self.font.render(self.battle_stats.battle_queue[i], False, WHITE), (380, queue_indices[i]))
 
     # fixme work on indices
     def move_player(self, key_event: pygame.event, screen: pygame.Surface):
@@ -83,4 +83,3 @@ class GameState(object):
         self.battle_stats.set_enemy_path(random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0])
         self.battle_stats.set_battle_queue()
         self.paint_battle_menu(screen)
-

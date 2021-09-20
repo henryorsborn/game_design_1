@@ -1,6 +1,7 @@
 from core.battle.enemy import Enemy
 from core.entities.player import Player
 
+
 class BattleStats(object):
 
     def __init__(self, player: Player, in_battle: bool = True, battle_selection: int = 0, enemy_path: str = ""):
@@ -21,10 +22,10 @@ class BattleStats(object):
 
         strongest_enemy = max([self.player, self.enemy], key=lambda x: x.speed)
         weakest_enemy = min([self.player, self.enemy], key=lambda x: x.speed)
-        adjusted_cooldown = strongest_enemy.speed/weakest_enemy.speed
+        adjusted_cooldown = strongest_enemy.speed / weakest_enemy.speed
 
-        turns = [{"name":"Player","wait_time":int(self.player.speed/adjusted_cooldown),"cool_down":0},
-                 {"name":self.enemy.name,"wait_time":int(self.enemy.speed/adjusted_cooldown),"cool_down":0}]
+        turns = [{"name": "Player", "wait_time": int(self.player.speed / adjusted_cooldown), "cool_down": 0},
+                 {"name": self.enemy.name, "wait_time": int(self.enemy.speed / adjusted_cooldown), "cool_down": 0}]
 
         for _ in range(100):
             for i in range(len(turns)):
