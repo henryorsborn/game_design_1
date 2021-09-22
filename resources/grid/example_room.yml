@@ -1,0 +1,29 @@
+grid:
+  name: Example Room
+  width: 10
+  height: 7
+  blank_regions:
+    - blank_region:
+        top_left_index_x: 0
+        top_left_index_y: 0
+        width: 3
+        height: 4
+  entities:
+    - entity:
+        type: Chest
+        start_index_x: 9
+        start_index_y: 6
+        is_opened: false
+    - entity:
+        type: Player
+        start_index_x: 9
+        start_index_y: 2
+  start_index_x: 6
+  start_index_y: 3
+  enemies:
+    - enemy:
+        path: "1_wolf"
+        encounter_rate: 3
+    - enemy:
+        path: "2_sentry_bot"
+        encounter_rate: 1
