@@ -50,11 +50,11 @@ monster:
         eff: None
   script:
     - step:
-      type: attack
-      key: 'attack'
-      args: 'missile'
+        type_: attack
+        key: 'attack'
+        args: 'missile'
     - step:
-        type: while
+        type_: while
         key: 'while'
         children:
           - step:

@@ -39,6 +39,8 @@ class GameState(object):
         pygame.draw.rect(screen, BLACK, (65, 230, 230, 90))
         pygame.draw.rect(screen, WHITE, (350, 225, 140, 100))
         pygame.draw.rect(screen, BLACK, (355, 230, 130, 90))
+        pygame.draw.rect(screen, WHITE, (60, 320, 430, 60))
+        pygame.draw.rect(screen, BLACK, (65, 325, 420, 50))
         commands = ['Attack', 'Skill', 'Magic', 'Item']
         command_indices = [235, 257, 278, 300]
         queue_indices = [302, 290, 278, 266, 254, 242, 230]
@@ -54,6 +56,7 @@ class GameState(object):
         screen.blit(self.font.render(">>", False, RED), (360, 302))
         for i in range(6, -1, -1):
             screen.blit(self.font.render(self.battle_stats.battle_queue[i], False, WHITE), (380, queue_indices[i]))
+        screen.blit(self.font.render(self.battle_stats.message, False, WHITE), (80, 340))
 
     # fixme work on indices
     def move_player(self, key_event: pygame.event, screen: pygame.Surface):
@@ -79,7 +82,7 @@ class GameState(object):
                     self.grid.player_position[1] += 1
         self.grid.repaint(screen)
         if random.randint(0, 100 - self.grid.danger) % (100 - self.grid.danger) == 0 and self.grid.danger != 0:
-            self.initiate__battle(screen)
+            self.initiate_battle(screen)
 
     def attack(self, screen: pygame.Surface):
         luck = self.battle_stats.player.luck
@@ -87,24 +90,13 @@ class GameState(object):
         if 69 + int(luck*0.1176) > random.randint(1, 100):
             damage = round(self.battle_stats.player.strength * self.battle_stats.player.level * 3.9607 * (1+random.random()))
             self.battle_stats.enemy.hp -= damage
-            self.battle_stats.end_turn()
-            self.paint_battle_menu(screen)
-            self.show_damage(damage, screen)
+            self.battle_stats.message = f"Your attack did {damage} damage!"
         else:
-            pass
-
-    def show_damage(self, damage: int, screen: pygame.Surface):
+            self.battle_stats.message = "You missed!"
         self.paint_battle_menu(screen)
-        for i in range(3):
-            screen.blit(self.font.render(str(damage), False, WHITE), ((i*30)+230, 190))
-            time.sleep(0.01)
-            GameState.clear_screen(screen)
-            self.paint_battle_menu(screen)
-            time.sleep(0.01)
-        GameState.clear_screen(screen)
-        self.paint_battle_menu(screen)
+        self.battle_stats.end_turn()
 
-    def initiate__battle(self, screen: pygame.Surface):
+    def initiate_battle(self, screen: pygame.Surface):
         self.battle_stats.in_battle = True
         GameState.paint_battle_start_animation(screen)
         self.battle_stats.set_enemy_path(random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0])

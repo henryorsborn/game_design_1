@@ -37,18 +37,22 @@ if __name__ == "__main__":
                     gs.move_player(current_event, screen)
                     pygame.display.flip()
                     time.sleep(0.15)
-            elif gs.battle_stats.current_turn == "Player":
-                if event.type == KEYDOWN:
-                    if event.key == pygame.K_s:
-                        gs.battle_stats.battle_selection += 1
-                        if gs.battle_stats.battle_selection == 4:
-                            gs.battle_stats.battle_selection = 0
-                    if event.key == pygame.K_w:
-                        gs.battle_stats.battle_selection -= 1
-                        if gs.battle_stats.battle_selection == -1:
-                            gs.battle_stats.battle_selection = 3
-                    if event.key == pygame.K_RETURN:
-                        if gs.battle_stats.battle_selection == 0:
-                            gs.attack(screen)
-                    gs.paint_battle_menu(screen)
+            else:
+                if gs.battle_stats.current_turn == "Player":
+                    if event.type == KEYDOWN:
+                        if event.key == pygame.K_s:
+                            gs.battle_stats.battle_selection += 1
+                            if gs.battle_stats.battle_selection == 4:
+                                gs.battle_stats.battle_selection = 0
+                        if event.key == pygame.K_w:
+                            gs.battle_stats.battle_selection -= 1
+                            if gs.battle_stats.battle_selection == -1:
+                                gs.battle_stats.battle_selection = 3
+                        if event.key == pygame.K_RETURN:
+                            if gs.battle_stats.battle_selection == 0:
+                                gs.attack(screen)
+                        gs.paint_battle_menu(screen)
+                else:
+                    gs.battle_stats.enemy.run_through_script_helper(gs.battle_stats)
+                    gs.battle_stats.end_turn()
         pygame.display.flip()
