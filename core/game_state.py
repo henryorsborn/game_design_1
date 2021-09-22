@@ -96,10 +96,12 @@ class GameState(object):
             self.battle_stats.message = "You missed!"
         self.paint_battle_menu(screen)
         self.battle_stats.end_turn()
+        time.sleep(1)
 
     def initiate_battle(self, screen: pygame.Surface):
         self.battle_stats.in_battle = True
         GameState.paint_battle_start_animation(screen)
         self.battle_stats.set_enemy_path(random.choices(self.grid.enemy_paths, self.grid.enemy_encounter_rates, k=1)[0])
         self.battle_stats.set_battle_queue()
+        self.battle_stats.battle_selection = 0
         self.paint_battle_menu(screen)

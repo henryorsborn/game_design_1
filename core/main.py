@@ -51,8 +51,12 @@ if __name__ == "__main__":
                         if event.key == pygame.K_RETURN:
                             if gs.battle_stats.battle_selection == 0:
                                 gs.attack(screen)
+                                pygame.display.flip()
                         gs.paint_battle_menu(screen)
+                        pygame.display.flip()
                 else:
                     gs.battle_stats.enemy.run_through_script_helper(gs.battle_stats)
+                    pygame.display.flip()
                     gs.battle_stats.end_turn()
+                    gs.paint_battle_menu(screen)
         pygame.display.flip()
