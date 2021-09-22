@@ -87,8 +87,9 @@ class GameState(object):
     def attack(self, screen: pygame.Surface):
         luck = self.battle_stats.player.luck
         # with max luck the highest probability should be 99
-        if 69 + int(luck*0.1176) > random.randint(1, 100):
-            damage = round(self.battle_stats.player.strength * self.battle_stats.player.level * 3.9607 * (1+random.random()))
+        if 69 + int(luck * 0.1176) > random.randint(1, 100):
+            damage = round(
+                self.battle_stats.player.strength * self.battle_stats.player.level * 3.9607 * (1 + random.random()))
             self.battle_stats.enemy.hp -= damage
             self.battle_stats.message = f"Your attack did {damage} damage!"
         else:

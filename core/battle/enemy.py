@@ -2,7 +2,7 @@ from core.battle.attack import Attack
 from core.battle.attack_effect import AttackEffect
 from yaml import safe_load
 import random
-import pygame
+
 
 class Enemy(object):
 
@@ -28,8 +28,8 @@ class Enemy(object):
         self.elem_absorb = elem_absorb if elem_absorb is not [] else None
         self.elem_weak = elem_weak if elem_weak is not [] else None
         self.attacks = attacks
-        self.script = script
-        self.script_queue = script.copy()
+        self.script_stack = [{"steps": script, "current_place": 0}]
+        self.script = self.script_stack[0]
 
     @staticmethod
     def read_and_deserialize_yml(path: str = ""):
@@ -57,27 +57,26 @@ class Enemy(object):
         attack: Attack = self.attacks[key]
         self.mp -= attack.cost
 
-        if ((10*attack.accuracy) * battle_stats.player.luck/255) > random.randint(1, 100):
-            damage = (self.defense * attack.damage) * battle_stats.player.defense/255
+        if ((10 * attack.accuracy) * battle_stats.player.luck / 255) > random.randint(1, 100):
+            damage = (self.defense * attack.damage) * battle_stats.player.defense / 255
             battle_stats.player.hp -= damage
             battle_stats.message = f"{self.name}'s {attack.name} did {damage} damage!"
         else:
             battle_stats.message = f"{self.name}'s {attack.name} missed!"
-        #todo allow for resistance and absorb with attacks
+        # todo allow for resistance and absorb with attacks
 
+    # fixme - holy shit do something about these indexes
     def run_through_script_helper(self, battle_stats):
-        self.run_through_script_rec(self.script_queue, battle_stats)
-
-    def run_through_script_rec(self, steps, battle_stats):
-        if len(steps) == 0:
-            return
-        step = steps.pop(0)["step"]
-        if step["type_"] == "while":
-            self.run_through_script_rec(step["children"], battle_stats)
-        if step["type_"] == "func":
-            if step["key"] == "rand_pick":
+        current_step = self.script["steps"]
+        index = self.script["current_place"]
+        if current_step[index]["step"]["type_"] == "while":
+            self.script = {"steps": current_step[index]["step"]["children"], "current_place": 0}
+            self.script_stack.append(self.script)
+        if current_step[index]["step"]["type_"] == "func":
+            if current_step[index]["step"]["key"] == "rand_pick":
                 fringe = []
-                for choice, weight in step["args_"]:
+                for choice, weight in current_step[index]["step"]["args_"]:
                     fringe.extend([choice] * weight)
                 choice = random.choice(fringe)
                 self.execute_attack(choice, battle_stats)
+            self.script_stack[0]["current_place"] += 1
