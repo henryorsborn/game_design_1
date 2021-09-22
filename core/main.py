@@ -37,7 +37,7 @@ if __name__ == "__main__":
                     gs.move_player(current_event, screen)
                     pygame.display.flip()
                     time.sleep(0.15)
-            else:
+            elif gs.battle_stats.current_turn == "Player":
                 if event.type == KEYDOWN:
                     if event.key == pygame.K_s:
                         gs.battle_stats.battle_selection += 1

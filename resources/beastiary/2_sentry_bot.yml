@@ -1,20 +1,19 @@
 monster:
-  type: mechanical
-  class: common_enemy
+  type_: mechanical
+  class_: common_enemy
   name: Sentry Bot
   path_to_sprite: "../resources/sprites/sentry_bot.png"
-  stats:
-    hp: 200
-    mp: 60
-    str: 2
-    def: 2
-    mag: 4
-    mgdf: 3
-    spd: 5
-    resist: poison|freenzy
-    elem_resist: dark
-    elem_absorb: None
-    elem_weak: lightning
+  hp: 200
+  mp: 60
+  str_: 2
+  def_: 2
+  mag: 4
+  mgdf: 3
+  spd: 5
+  resist: poison|freenzy
+  elem_resist: dark
+  elem_absorb: None
+  elem_weak: lightning
   attacks:
     - attack:
         name: Sonic Wave
