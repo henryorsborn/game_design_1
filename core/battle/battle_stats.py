@@ -12,6 +12,7 @@ class BattleStats(object):
         self.enemy = None
         self.battle_queue = []
         self.current_turn = None
+        self.message = ""
 
     def set_enemy_path(self, enemy_path):
         self.enemy_path = enemy_path
@@ -35,3 +36,9 @@ class BattleStats(object):
                     queue.append(turns[i]["name"])
         self.battle_queue = queue
         self.current_turn = self.battle_queue[0]
+
+    def end_turn(self):
+        self.battle_queue.pop(0)
+        self.current_turn = self.battle_queue[0]
+        if len(self.battle_queue) < 7:
+            self.set_battle_queue()

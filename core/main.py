@@ -47,5 +47,8 @@ if __name__ == "__main__":
                         gs.battle_stats.battle_selection -= 1
                         if gs.battle_stats.battle_selection == -1:
                             gs.battle_stats.battle_selection = 3
+                    if event.key == pygame.K_RETURN:
+                        if gs.battle_stats.battle_selection == 0:
+                            gs.attack(screen)
                     gs.paint_battle_menu(screen)
         pygame.display.flip()

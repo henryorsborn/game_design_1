@@ -17,6 +17,10 @@ class GameState(object):
         self.font = font
 
     @staticmethod
+    def clear_screen(screen: pygame.Surface):
+        pygame.draw.rect(screen, BLACK, (0, 0, 500, 500))
+
+    @staticmethod
     def paint_battle_start_animation(screen: pygame.Surface):
         for i in range(0, 500, 10):
             for j in range(10, 500, 30):
@@ -28,7 +32,7 @@ class GameState(object):
                     pygame.draw.rect(screen, PINK, (i, j, 10, 10))
             time.sleep(0.03)
             pygame.display.update()
-        pygame.draw.rect(screen, BLACK, (0, 0, 500, 500))
+        GameState.clear_screen(screen)
 
     def paint_battle_menu(self, screen: pygame.Surface):
         pygame.draw.rect(screen, WHITE, (60, 225, 240, 100))
@@ -76,6 +80,29 @@ class GameState(object):
         self.grid.repaint(screen)
         if random.randint(0, 100 - self.grid.danger) % (100 - self.grid.danger) == 0 and self.grid.danger != 0:
             self.initiate__battle(screen)
+
+    def attack(self, screen: pygame.Surface):
+        luck = self.battle_stats.player.luck
+        # with max luck the highest probability should be 99
+        if 69 + int(luck*0.1176) > random.randint(1, 100):
+            damage = round(self.battle_stats.player.strength * self.battle_stats.player.level * 3.9607 * (1+random.random()))
+            self.battle_stats.enemy.hp -= damage
+            self.battle_stats.end_turn()
+            self.paint_battle_menu(screen)
+            self.show_damage(damage, screen)
+        else:
+            pass
+
+    def show_damage(self, damage: int, screen: pygame.Surface):
+        self.paint_battle_menu(screen)
+        for i in range(3):
+            screen.blit(self.font.render(str(damage), False, WHITE), ((i*30)+230, 190))
+            time.sleep(0.01)
+            GameState.clear_screen(screen)
+            self.paint_battle_menu(screen)
+            time.sleep(0.01)
+        GameState.clear_screen(screen)
+        self.paint_battle_menu(screen)
 
     def initiate__battle(self, screen: pygame.Surface):
         self.battle_stats.in_battle = True
