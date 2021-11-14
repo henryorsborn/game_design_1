@@ -41,6 +41,9 @@ class GameState(object):
         pygame.draw.rect(screen, BLACK, (355, 230, 130, 90))
         pygame.draw.rect(screen, WHITE, (60, 320, 430, 60))
         pygame.draw.rect(screen, BLACK, (65, 325, 420, 50))
+        pygame.draw.rect(screen, WHITE, (60, 150, 180, 80))
+        pygame.draw.rect(screen, BLACK, (65, 155, 170, 70))
+        screen.blit(self.font.render(f"{self.battle_stats.player.hp}/{self.battle_stats.player.max_hp}", False, WHITE), (70,160))
         commands = ['Attack', 'Skill', 'Magic', 'Item']
         command_indices = [235, 257, 278, 300]
         queue_indices = [302, 290, 278, 266, 254, 242, 230]

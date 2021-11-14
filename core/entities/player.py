@@ -11,6 +11,7 @@ class Player(Entity):
         super().__init__(start_index)
         self.level = 1
         self.hp = 300
+        self.max_hp = 300
         self.mp = 100
         self.strength = 5
         self.defense = 5
